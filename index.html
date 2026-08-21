@@ -5,64 +5,129 @@
   <title>Elevated Impact Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { margin:0; font-family:Arial,sans-serif; background:#0f172a; color:white; }
-    header { padding:14px 20px; background:#020617; display:flex; justify-content:space-between; align-items:center; gap:20px; }
-    .eig-home { display:flex; align-items:center; gap:10px; color:white; text-decoration:none; font-weight:800; letter-spacing:.02em; }
-    .eig-home img { width:58px; height:40px; object-fit:contain; display:block; }
-    .eig-home span { white-space:nowrap; }
-    nav { display:flex; flex-wrap:wrap; justify-content:flex-end; }
-    nav a { margin-left:20px; color:white; text-decoration:none; }
-    nav a:hover { color:#f87171; }
-    .hero { padding:100px 40px; background:linear-gradient(90deg,rgba(2,6,23,.84),rgba(2,6,23,.38)),url('https://images.unsplash.com/photo-1599058917212-d750089bc07e') center/cover; }
-    .hero h1 { font-size:48px; }
-    .section { padding:60px 40px; }
-    .card { background:#1e293b; padding:20px; margin-top:20px; border-radius:12px; }
+    :root { --navy:#0f172a; --dark:#020617; --panel:#1e293b; --red:#ef4444; --muted:#cbd5e1; --line:rgba(255,255,255,.10); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family:Arial,sans-serif; background:var(--navy); color:white; }
+    .layout { display:grid; grid-template-columns:230px 1fr; min-height:100vh; }
+    .sidebar { position:sticky; top:0; height:100vh; background:var(--dark); border-right:1px solid var(--line); padding:18px 14px; display:flex; flex-direction:column; }
+    .eig-home { display:flex; align-items:center; gap:10px; color:white; text-decoration:none; font-weight:800; padding:4px 8px 18px; border-bottom:1px solid var(--line); }
+    .eig-home img { width:52px; height:36px; object-fit:contain; }
+    .nav { padding-top:16px; overflow:auto; }
+    .nav a { display:block; color:white; text-decoration:none; padding:9px 10px; margin:2px 0; border-radius:8px; font-weight:700; }
+    .nav a:hover, .nav a.active { background:rgba(255,255,255,.07); }
+    .nav a.active { box-shadow:inset 3px 0 0 var(--red); }
+    .subnav { margin:0 0 5px 12px; }
+    .subnav a { font-size:13px; color:#94a3b8; padding:6px 10px; font-weight:600; }
+    .signin { margin-top:auto; display:block; text-align:center; background:var(--red); color:white; text-decoration:none; padding:11px 12px; border-radius:8px; font-weight:800; }
+    .content { min-width:0; }
+    .mobile-header { display:none; }
+    .hero { padding:90px 46px 70px; background:linear-gradient(135deg,#0f172a,#111d36 55%,#1d245d); border-bottom:1px solid var(--line); }
+    .hero-inner { max-width:1080px; display:grid; grid-template-columns:1.1fr .9fr; gap:38px; align-items:center; }
+    .hero h1 { font-size:54px; line-height:1.02; margin:0 0 18px; }
+    .hero h1 span { color:var(--red); }
+    .hero p { color:var(--muted); font-size:19px; line-height:1.6; max-width:700px; }
+    .button { display:inline-block; padding:12px 20px; background:var(--red); border:none; color:white; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:800; margin-top:8px; }
+    .team-placeholder { min-height:250px; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.045); display:flex; align-items:center; justify-content:center; text-align:center; color:#94a3b8; padding:24px; }
+    .section { padding:58px 46px; max-width:1200px; }
+    .section h2 { margin-top:0; font-size:34px; }
+    .section p.lead { color:#94a3b8; max-width:760px; line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px; }
+    .card { background:var(--panel); padding:22px; border-radius:12px; border:1px solid var(--line); }
+    .card h3 { margin-top:0; }
+    .card p { color:#b8c3d1; line-height:1.55; }
     .card a { color:#fca5a5; font-weight:800; text-decoration:none; }
-    footer { padding:40px; background:#020617; text-align:center; }
-    button,.button { display:inline-block; padding:12px 20px; background:#ef4444; border:none; color:white; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:800; }
+    .simple-links { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:24px; }
+    .simple-links a { text-decoration:none; background:#162033; border:1px solid var(--line); padding:16px; border-radius:10px; font-weight:800; }
+    footer { padding:36px 46px; background:var(--dark); color:#94a3b8; }
+    footer a { color:white; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } .simple-links { grid-template-columns:1fr 1fr; } .hero-inner { grid-template-columns:1fr; } }
     @media (max-width:700px) {
-      header { padding:10px 14px; }
-      .eig-home img { width:50px; height:34px; }
-      .eig-home span { display:none; }
-      nav a { margin-left:12px; font-size:14px; }
-      .hero { padding:70px 24px; }
-      .hero h1 { font-size:38px; }
-      .section { padding:44px 24px; }
+      .layout { display:block; }
+      .sidebar { display:none; }
+      .mobile-header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:var(--dark); }
+      .mobile-header img { width:48px; height:32px; object-fit:contain; }
+      .mobile-header a { color:white; text-decoration:none; font-weight:800; }
+      .hero { padding:60px 24px 46px; }
+      .hero h1 { font-size:42px; }
+      .section { padding:42px 24px; }
+      .grid, .simple-links { grid-template-columns:1fr; }
+      footer { padding:30px 24px; }
     }
   </style>
 </head>
 <body>
-<header>
-  <a class="eig-home" href="/" aria-label="Elevated Impact Group home">
-    <img src="assets/eig-header-icon.png" alt="Elevated Impact Group" />
-    <span>Elevated Impact Group</span>
-  </a>
-  <nav>
-    <a href="/">Home</a>
-    <a href="#">Outings</a>
-    <a href="/elvertising.html">Elvertising</a>
-    <a href="#">Fundraising</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
-<section class="hero">
-  <h1>Drive connections.<br><span style="color:#ef4444;">Elevate your impact.</span></h1>
-  <p>Events. Sponsorships. Advertising. Fundraising.</p>
-  <a class="button" href="/elvertising.html">Explore Elvertising</a>
-</section>
-<section class="section">
-  <h2>Elevated Outing Package</h2>
-  <div class="card">Full-service event planning, sponsorship strategy, and execution.</div>
-  <h2 style="margin-top:40px;">Elvertising</h2>
-  <div class="card">Create, sell, display, print, and promote advertising across digital screens, physical spaces, events, offers, and more. <a href="/elvertising.html">See how Elvertising works →</a></div>
-  <h2 style="margin-top:40px;">School Fundraising</h2>
-  <div class="card">Structured fundraising system with sponsorships, events, and advertising.</div>
-</section>
-<footer>
-  <p>Elevated Impact Group, LLC</p>
-  <p>Reading, PA</p>
-  <p>info@elevatedimpactgroup.net</p>
-  <p style="margin-top:20px;"><a href="#" style="color:white;">Privacy</a> | <a href="#" style="color:white;">Terms</a> | <a href="#" style="color:white;">Refunds</a></p>
-</footer>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="eig-home" href="/" aria-label="Elevated Impact Group home">
+      <img src="assets/eig-header-icon.png" alt="Elevated Impact Group" />
+      <span>EIG</span>
+    </a>
+    <nav class="nav">
+      <a class="active" href="/">Home</a>
+      <a href="https://elevated-impact-platform.vercel.app/">Business Workspace</a>
+      <a href="#apps">Apps</a>
+      <a href="#events">Events</a>
+      <div class="subnav"><a href="#events">Event Builder</a></div>
+      <a href="#golf">EIG Golf</a>
+      <div class="subnav"><a href="#golf">Outing Builder</a><a href="#golf">Sponsors</a></div>
+      <a href="/elvertising.html">Elvertising</a>
+      <div class="subnav"><a href="/elvertising.html#get-started">Digital</a><a href="/elvertising.html#get-started">Physical</a><a href="/elvertising.html#get-started">Creator / Tracker</a></div>
+      <a href="#shop">Shop</a>
+      <a href="#partner">Become a Partner</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#mission">Mission</a>
+      <a href="#team">EIG Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="signin" href="https://elevated-impact-platform.vercel.app/">Sign In / Join EIG</a>
+  </aside>
+
+  <main class="content">
+    <div class="mobile-header">
+      <a href="/"><img src="assets/eig-header-icon.png" alt="EIG"></a>
+      <a href="https://elevated-impact-platform.vercel.app/">Sign In</a>
+    </div>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Drive connections.<br><span>Elevate your impact.</span></h1>
+          <p>Events, advertising, golf, ecommerce, sponsorships, partnerships, and business tools — connected through one growing EIG ecosystem.</p>
+          <a class="button" href="#apps">Explore EIG</a>
+        </div>
+        <div class="team-placeholder" id="team">
+          <div><strong>EIG Team</strong><br><br>Your team artwork will replace this panel when we add the final image.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="apps">
+      <h2>Explore EIG</h2>
+      <p class="lead">A cleaner starting point for the tools, services, and opportunities inside Elevated Impact Group.</p>
+      <div class="grid">
+        <div class="card" id="events"><h3>Events</h3><p>Build and manage events with registration, sponsorship, vendors, schedules, and event tools.</p><a href="#events">Explore Events →</a></div>
+        <div class="card" id="golf"><h3>EIG Golf</h3><p>Golf outing tools, sponsorships, registration, event operations, and course-focused services.</p><a href="#golf">Explore EIG Golf →</a></div>
+        <div class="card"><h3>Elvertising</h3><p>Digital advertising, physical signage, sponsorships, creator tools, offers, and campaign tracking.</p><a href="/elvertising.html">Explore Elvertising →</a></div>
+      </div>
+    </section>
+
+    <section class="section" id="ecosystem">
+      <h2>One connected ecosystem</h2>
+      <p class="lead">Businesses, events, sponsors, vendors, customers, deals, ecommerce, and EIG apps can work together instead of operating as separate pieces.</p>
+      <div class="simple-links">
+        <a id="shop" href="#shop">Shop</a>
+        <a id="partner" href="#partner">Become a Partner</a>
+        <a id="mission" href="#mission">Our Mission</a>
+        <a id="contact" href="mailto:info@elevatedimpactgroup.net">Contact EIG</a>
+      </div>
+    </section>
+
+    <footer>
+      <p>Elevated Impact Group, LLC · Reading, PA · info@elevatedimpactgroup.net</p>
+      <p><a href="#">Privacy</a> | <a href="#">Terms</a> | <a href="#">Refunds</a></p>
+    </footer>
+  </main>
+</div>
 </body>
 </html>
