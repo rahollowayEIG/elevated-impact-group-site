@@ -2,21 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Elvertising | Elevated Impact Group</title>
+  <title>EleVertising | Elevated Impact Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Elvertising by EIG helps businesses create, sell, display, print, promote, and track advertising across digital, physical, and event spaces." />
+  <meta name="description" content="EleVertising by EIG helps businesses create, sell, display, print, promote, and track advertising across digital, physical, and event spaces." />
   <style>
-    :root { --bg:#07111f; --panel:#101d31; --panel2:#0c1728; --red:#ef4444; --text:#f8fafc; --muted:#a9b5c7; --line:rgba(255,255,255,.11); }
+    :root { --bg:#07111f; --dark:#020617; --panel:#101d31; --panel2:#0c1728; --red:#ef4444; --text:#f8fafc; --muted:#a9b5c7; --line:rgba(255,255,255,.11); }
     * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
     body { margin:0; font-family:Arial,sans-serif; background:radial-gradient(circle at top right,#172554 0,#07111f 34%,#050b14 100%); color:var(--text); }
     a { color:inherit; }
-    header { position:sticky; top:0; z-index:20; padding:14px 24px; background:rgba(2,6,23,.94); backdrop-filter:blur(14px); display:flex; justify-content:space-between; align-items:center; gap:20px; border-bottom:1px solid var(--line); }
-    .eig-home { display:flex; align-items:center; gap:10px; color:white; text-decoration:none; font-weight:800; }
-    .eig-home img { width:58px; height:40px; object-fit:contain; }
-    nav { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:18px; }
-    nav a { text-decoration:none; color:#e5e7eb; }
-    nav a.active { color:#f87171; font-weight:800; }
-    .hero { max-width:1180px; margin:0 auto; padding:96px 28px 68px; display:grid; grid-template-columns:1.25fr .75fr; gap:46px; align-items:center; }
+    .layout { display:grid; grid-template-columns:230px 1fr; min-height:100vh; }
+    .sidebar { position:sticky; top:0; height:100vh; background:var(--dark); border-right:1px solid var(--line); padding:18px 14px; display:flex; flex-direction:column; z-index:25; }
+    .eig-home { display:flex; align-items:center; gap:10px; color:white; text-decoration:none; font-weight:800; padding:4px 8px 18px; border-bottom:1px solid var(--line); }
+    .eig-home img { width:52px; height:36px; object-fit:contain; }
+    .nav { padding-top:16px; overflow:auto; }
+    .nav a { display:block; color:white; text-decoration:none; padding:9px 10px; margin:2px 0; border-radius:8px; font-weight:700; }
+    .nav a:hover, .nav a.active { background:rgba(255,255,255,.07); }
+    .nav a.active { box-shadow:inset 3px 0 0 var(--red); }
+    .subnav { margin:0 0 5px 12px; }
+    .subnav a { font-size:13px; color:#94a3b8; padding:6px 10px; font-weight:600; }
+    .content { min-width:0; }
+    .topbar { position:sticky; top:0; z-index:30; min-height:58px; display:flex; justify-content:flex-end; align-items:center; padding:10px 26px; background:rgba(2,6,23,.94); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+    .ecospace-btn { background:var(--red); color:#fff; text-decoration:none; padding:10px 16px; border-radius:9px; font-weight:900; }
+    .hero { max-width:1180px; margin:0 auto; padding:82px 28px 68px; display:grid; grid-template-columns:1.25fr .75fr; gap:46px; align-items:center; }
     .eyebrow { color:#f87171; text-transform:uppercase; letter-spacing:.15em; font-weight:900; font-size:13px; }
     h1 { font-size:clamp(46px,7vw,78px); line-height:.98; margin:14px 0 22px; letter-spacing:-.04em; }
     .hero p { color:#cbd5e1; font-size:21px; line-height:1.55; max-width:760px; }
@@ -48,84 +56,116 @@
     .path p { color:var(--muted); line-height:1.55; }
     .bottom-cta { text-align:center; background:linear-gradient(135deg,#7f1d1d,#111827); border-radius:24px; padding:48px 28px; border:1px solid rgba(255,255,255,.14); }
     footer { padding:38px 24px; text-align:center; color:#94a3b8; border-top:1px solid var(--line); }
-    @media (max-width:860px) { .hero { grid-template-columns:1fr; padding-top:66px; } .grid,.path-grid { grid-template-columns:1fr 1fr; } }
-    @media (max-width:620px) { .eig-home span { display:none; } nav { gap:10px; } nav a { font-size:13px; } .grid,.choice-grid,.path-grid { grid-template-columns:1fr; } .hero,.section { padding-left:20px; padding-right:20px; } h1 { font-size:48px; } }
+    @media (max-width:860px) { .hero { grid-template-columns:1fr; padding-top:56px; } .grid,.path-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:700px) {
+      .layout { display:block; }
+      .sidebar { position:static; height:auto; }
+      .nav { display:grid; grid-template-columns:1fr 1fr; }
+      .subnav { display:none; }
+      .topbar { padding:12px 16px; }
+      .grid,.choice-grid,.path-grid { grid-template-columns:1fr; }
+      .hero,.section { padding-left:20px; padding-right:20px; }
+      h1 { font-size:48px; }
+    }
   </style>
 </head>
 <body>
-<header>
-  <a class="eig-home" href="/" aria-label="Elevated Impact Group home"><img src="assets/eig-header-icon.png" alt="Elevated Impact Group" /><span>Elevated Impact Group</span></a>
-  <nav><a href="/">Home</a><a href="#">Outings</a><a class="active" href="/elvertising.html">Elvertising</a><a href="#">Fundraising</a><a href="#">Contact</a></nav>
-</header>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="eig-home" href="/" aria-label="Elevated Impact Group home">
+      <img src="assets/eig-header-icon.png" alt="Elevated Impact Group" />
+      <span>EIG</span>
+    </a>
+    <nav class="nav">
+      <a href="/">Home</a>
+      <a href="https://elevated-impact-platform.vercel.app/">Business Workspace</a>
+      <a href="/#apps">Apps</a>
+      <a href="/#events">Events</a>
+      <div class="subnav"><a href="/#events">Event Builder</a></div>
+      <a href="/#golf">EIG Golf</a>
+      <div class="subnav"><a href="/#golf">Outing Builder</a><a href="/#golf">Sponsors</a></div>
+      <a class="active" href="/elvertising.html">EleVertising</a>
+      <div class="subnav"><a href="#get-started">Digital</a><a href="#get-started">Physical</a><a href="#get-started">Creator / Tracker</a></div>
+      <a href="/#shop">Shop</a>
+      <a href="/#partner">Become a Partner</a>
+      <a href="/#ecosystem">Ecosystem</a>
+      <a href="/#mission">Mission</a>
+      <a href="/#team">EIG Team</a>
+      <a href="mailto:info@elevatedimpactgroup.net">Contact</a>
+    </nav>
+  </aside>
 
-<main>
-  <section class="hero">
-    <div>
-      <div class="eyebrow">Elvertising by EIG</div>
-      <h1>Elevate your atmosphere. Turn your space into revenue.</h1>
-      <p><strong>Create it. Sell it. Display it. Print it. Promote it — with EIG.</strong> Bring digital advertising, physical signage, event sponsorships, offers, production, and local vendor connections into one growing system.</p>
-      <div class="cta-row"><a class="btn primary" href="#get-started">Build an Ad</a><a class="btn secondary" href="#get-started">Monetize My Space</a><a class="btn secondary" href="https://elevated-impact-platform.vercel.app/">Sign In / Join EIG</a></div>
-    </div>
-    <div class="hero-card">
-      <div class="screen"><span>ELVERTISING PREVIEW · 16:9</span><strong>Your message. Their attention.<br />One connected EIG campaign.</strong><span>Digital · Print · Event · Offer · QR</span></div>
-      <p style="color:#a9b5c7;line-height:1.5;margin:18px 0 0;">Designed for the horizontal screens, venue placements, event exposure, and physical media businesses already use every day.</p>
-    </div>
-  </section>
+  <main class="content">
+    <div class="topbar"><a class="ecospace-btn" href="https://elevated-impact-platform.vercel.app/">Enter EIG EcoSpace</a></div>
 
-  <section class="section">
-    <div class="eyebrow">One system, more possibilities</div>
-    <h2>Advertising that connects to the rest of your business.</h2>
-    <p class="section-lead">Elvertising is being designed as more than screen time. Build creative, package placements, connect offers, source production, and manage the work behind the campaign.</p>
-    <div class="grid">
-      <div class="card"><h3>Design Tools</h3><p>Create professional horizontal digital ads and print-ready campaign pieces with reusable EIG templates.</p></div>
-      <div class="card"><h3>Digital Displays</h3><p>Manage TV and digital-signage placements with EIG-branded display workflows and future white-label options.</p></div>
-      <div class="card"><h3>Physical Advertising</h3><p>Sell and manage signs, banners, course placements, venue displays, scorecards, table pieces, and more.</p></div>
-      <div class="card"><h3>Event Sponsorships</h3><p>Bundle event exposure, naming rights, challenge placements, digital ads, physical signs, and sponsor benefits.</p></div>
-      <div class="card"><h3>Deals & Offers</h3><p>Add coupons, QR codes, ecommerce offers, event promotions, and trackable calls to action to campaigns.</p></div>
-      <div class="card"><h3>Vendor Sourcing</h3><p>Turn print, signage, apparel, installation, and production needs into vendor opportunities that can receive quotes.</p></div>
-    </div>
-  </section>
-
-  <section class="discovery" id="get-started">
-    <div class="section">
-      <div class="eyebrow">Start with what you need</div>
-      <h2>What do you want to use advertising or signage for?</h2>
-      <p class="section-lead">Choose as many as you want. Elvertising can eventually tailor the tools, opportunities, and recommendations around how you actually plan to use the system.</p>
-      <div class="choice-grid">
-        <label class="choice"><input type="checkbox" /><div><strong>Advertise my business or organization</strong><span>Create campaigns and find places to run them.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Promote an event</strong><span>Connect ads, sponsorships, offers, registration, and event pages.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Sell advertising space at my location</strong><span>Turn screens and physical spaces into sellable inventory.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Sell sponsorship opportunities</strong><span>Package event benefits with digital and physical exposure.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Create digital signage for my location</strong><span>Use screens for promotions, announcements, and advertising.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Create printed signs, banners, posters, or displays</strong><span>Design the job and connect it to local production.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Create coupons, deals, or promotional offers</strong><span>Give viewers a reason to act and a way to track response.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Promote products or ecommerce</strong><span>Connect campaigns directly to products, collections, and event merchandise.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Find vendors to produce or install signage</strong><span>Float a project to approved vendors and compare private quotes.</span></div></label>
-        <label class="choice"><input type="checkbox" /><div><strong>Manage advertising for clients</strong><span>Coordinate campaigns, inventory, production, and fulfillment in one place.</span></div></label>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">EleVertising by EIG</div>
+        <h1>Elevate your atmosphere. Turn your space into revenue.</h1>
+        <p><strong>Create it. Sell it. Display it. Print it. Promote it — with EIG.</strong> Bring digital advertising, physical signage, event sponsorships, offers, production, and local vendor connections into one growing system.</p>
+        <div class="cta-row"><a class="btn primary" href="#get-started">Build an Ad</a><a class="btn secondary" href="#get-started">Monetize My Space</a><a class="btn secondary" href="https://elevated-impact-platform.vercel.app/">Enter EIG EcoSpace</a></div>
       </div>
-    </div>
-  </section>
+      <div class="hero-card">
+        <div class="screen"><span>ELEVERTISING PREVIEW · 16:9</span><strong>Your message. Their attention.<br />One connected EIG campaign.</strong><span>Digital · Print · Event · Offer · QR</span></div>
+        <p style="color:#a9b5c7;line-height:1.5;margin:18px 0 0;">Designed for the horizontal screens, venue placements, event exposure, and physical media businesses already use every day.</p>
+      </div>
+    </section>
 
-  <section class="section">
-    <div class="eyebrow">Three ways in</div>
-    <h2>What brings you to Elvertising?</h2>
-    <div class="path-grid">
-      <div class="path"><b>Advertiser</b><h3>I want attention.</h3><p>Build an ad, choose digital, physical, or event exposure, connect an offer, and prepare a campaign.</p><a class="btn primary" href="#get-started">Build an Ad</a></div>
-      <div class="path"><b>Venue / Organization</b><h3>I have space to monetize.</h3><p>Turn screens, signs, event inventory, and sponsor opportunities into organized revenue products.</p><a class="btn primary" href="#get-started">Monetize My Space</a></div>
-      <div class="path"><b>Vendor / Production</b><h3>I can fulfill the work.</h3><p>Future EIG vendor opportunities can route print, signage, apparel, installation, and production projects for private quotes.</p><a class="btn secondary" href="https://elevated-impact-platform.vercel.app/">Join EIG</a></div>
-    </div>
-  </section>
+    <section class="section">
+      <div class="eyebrow">One system, more possibilities</div>
+      <h2>Advertising that connects to the rest of your business.</h2>
+      <p class="section-lead">EleVertising is being designed as more than screen time. Build creative, package placements, connect offers, source production, and manage the work behind the campaign.</p>
+      <div class="grid">
+        <div class="card"><h3>Design Tools</h3><p>Create professional horizontal digital ads and print-ready campaign pieces with reusable EIG templates.</p></div>
+        <div class="card"><h3>Digital Displays</h3><p>Manage TV and digital-signage placements with EIG-branded display workflows and future white-label options.</p></div>
+        <div class="card"><h3>Physical Advertising</h3><p>Sell and manage signs, banners, course placements, venue displays, scorecards, table pieces, and more.</p></div>
+        <div class="card"><h3>Event Sponsorships</h3><p>Bundle event exposure, naming rights, challenge placements, digital ads, physical signs, and sponsor benefits.</p></div>
+        <div class="card"><h3>Deals & Offers</h3><p>Add coupons, QR codes, ecommerce offers, event promotions, and trackable calls to action to campaigns.</p></div>
+        <div class="card"><h3>Vendor Sourcing</h3><p>Turn print, signage, apparel, installation, and production needs into vendor opportunities that can receive quotes.</p></div>
+      </div>
+    </section>
 
-  <section class="section">
-    <div class="bottom-cta">
-      <div class="eyebrow">Build first. Grow from there.</div>
-      <h2 style="font-size:40px;margin:12px 0;">Create the campaign. Discover everything else EIG can connect to it.</h2>
-      <p style="color:#dbe4ef;font-size:18px;max-width:760px;margin:0 auto 24px;line-height:1.6;">Elvertising is being built to connect advertising, signage, sponsorships, deals, ecommerce, events, printing, and vendor fulfillment instead of leaving each job in a separate system.</p>
-      <a class="btn primary" href="#get-started">Start Exploring</a>
-    </div>
-  </section>
-</main>
+    <section class="discovery" id="get-started">
+      <div class="section">
+        <div class="eyebrow">Start with what you need</div>
+        <h2>What do you want to use advertising or signage for?</h2>
+        <p class="section-lead">Choose as many as you want. EleVertising can eventually tailor the tools, opportunities, and recommendations around how you actually plan to use the system.</p>
+        <div class="choice-grid">
+          <label class="choice"><input type="checkbox" /><div><strong>Advertise my business or organization</strong><span>Create campaigns and find places to run them.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Promote an event</strong><span>Connect ads, sponsorships, offers, registration, and event pages.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Sell advertising space at my location</strong><span>Turn screens and physical spaces into sellable inventory.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Sell sponsorship opportunities</strong><span>Package event benefits with digital and physical exposure.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Create digital signage for my location</strong><span>Use screens for promotions, announcements, and advertising.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Create printed signs, banners, posters, or displays</strong><span>Design the job and connect it to local production.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Create coupons, deals, or promotional offers</strong><span>Give viewers a reason to act and a way to track response.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Promote products or ecommerce</strong><span>Connect campaigns directly to products, collections, and event merchandise.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Find vendors to produce or install signage</strong><span>Float a project to approved vendors and compare private quotes.</span></div></label>
+          <label class="choice"><input type="checkbox" /><div><strong>Manage advertising for clients</strong><span>Coordinate campaigns, inventory, production, and fulfillment in one place.</span></div></label>
+        </div>
+      </div>
+    </section>
 
-<footer><p>Elevated Impact Group, LLC · Reading, PA · info@elevatedimpactgroup.net</p></footer>
+    <section class="section">
+      <div class="eyebrow">Three ways in</div>
+      <h2>What brings you to EleVertising?</h2>
+      <div class="path-grid">
+        <div class="path"><b>Advertiser</b><h3>I want attention.</h3><p>Build an ad, choose digital, physical, or event exposure, connect an offer, and prepare a campaign.</p><a class="btn primary" href="#get-started">Build an Ad</a></div>
+        <div class="path"><b>Venue / Organization</b><h3>I have space to monetize.</h3><p>Turn screens, signs, event inventory, and sponsor opportunities into organized revenue products.</p><a class="btn primary" href="#get-started">Monetize My Space</a></div>
+        <div class="path"><b>Vendor / Production</b><h3>I can fulfill the work.</h3><p>Future EIG vendor opportunities can route print, signage, apparel, installation, and production projects for private quotes.</p><a class="btn secondary" href="https://elevated-impact-platform.vercel.app/">Enter EIG EcoSpace</a></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="bottom-cta">
+        <div class="eyebrow">Build first. Grow from there.</div>
+        <h2 style="font-size:40px;margin:12px 0;">Create the campaign. Discover everything else EIG can connect to it.</h2>
+        <p style="color:#dbe4ef;font-size:18px;max-width:760px;margin:0 auto 24px;line-height:1.6;">EleVertising is being built to connect advertising, signage, sponsorships, deals, ecommerce, events, printing, and vendor fulfillment instead of leaving each job in a separate system.</p>
+        <a class="btn primary" href="#get-started">Start Exploring</a>
+      </div>
+    </section>
+
+    <footer><p>Elevated Impact Group, LLC · Reading, PA · info@elevatedimpactgroup.net</p></footer>
+  </main>
+</div>
 </body>
 </html>
