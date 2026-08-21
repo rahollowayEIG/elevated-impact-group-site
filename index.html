@@ -12,17 +12,22 @@
     .eig-home span { white-space:nowrap; }
     nav { display:flex; flex-wrap:wrap; justify-content:flex-end; }
     nav a { margin-left:20px; color:white; text-decoration:none; }
-    .hero { padding:100px 40px; background:url('https://images.unsplash.com/photo-1599058917212-d750089bc07e') center/cover; }
+    nav a:hover { color:#f87171; }
+    .hero { padding:100px 40px; background:linear-gradient(90deg,rgba(2,6,23,.84),rgba(2,6,23,.38)),url('https://images.unsplash.com/photo-1599058917212-d750089bc07e') center/cover; }
     .hero h1 { font-size:48px; }
     .section { padding:60px 40px; }
     .card { background:#1e293b; padding:20px; margin-top:20px; border-radius:12px; }
+    .card a { color:#fca5a5; font-weight:800; text-decoration:none; }
     footer { padding:40px; background:#020617; text-align:center; }
-    button { padding:12px 20px; background:#ef4444; border:none; color:white; border-radius:8px; cursor:pointer; }
+    button,.button { display:inline-block; padding:12px 20px; background:#ef4444; border:none; color:white; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:800; }
     @media (max-width:700px) {
       header { padding:10px 14px; }
       .eig-home img { width:50px; height:34px; }
       .eig-home span { display:none; }
       nav a { margin-left:12px; font-size:14px; }
+      .hero { padding:70px 24px; }
+      .hero h1 { font-size:38px; }
+      .section { padding:44px 24px; }
     }
   </style>
 </head>
@@ -35,7 +40,7 @@
   <nav>
     <a href="/">Home</a>
     <a href="#">Outings</a>
-    <a href="#">Advertising</a>
+    <a href="/elvertising.html">Elvertising</a>
     <a href="#">Fundraising</a>
     <a href="#">Contact</a>
   </nav>
@@ -43,13 +48,13 @@
 <section class="hero">
   <h1>Drive connections.<br><span style="color:#ef4444;">Elevate your impact.</span></h1>
   <p>Events. Sponsorships. Advertising. Fundraising.</p>
-  <button>Get Started</button>
+  <a class="button" href="/elvertising.html">Explore Elvertising</a>
 </section>
 <section class="section">
   <h2>Elevated Outing Package</h2>
   <div class="card">Full-service event planning, sponsorship strategy, and execution.</div>
-  <h2 style="margin-top:40px;">Digital Advertising System</h2>
-  <div class="card">In-venue TV advertising system for golf courses, businesses, and events.</div>
+  <h2 style="margin-top:40px;">Elvertising</h2>
+  <div class="card">Create, sell, display, print, and promote advertising across digital screens, physical spaces, events, offers, and more. <a href="/elvertising.html">See how Elvertising works →</a></div>
   <h2 style="margin-top:40px;">School Fundraising</h2>
   <div class="card">Structured fundraising system with sponsorships, events, and advertising.</div>
 </section>
