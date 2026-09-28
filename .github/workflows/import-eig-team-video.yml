@@ -1,0 +1,40 @@
+name: Import EIG team hero video
+
+on:
+  push:
+    branches:
+      - codex/homepage-team-video
+    paths:
+      - .github/workflows/import-eig-team-video.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import-video:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out launch branch
+        uses: actions/checkout@v4
+        with:
+          ref: codex/homepage-team-video
+
+      - name: Fetch approved EIG team video
+        env:
+          VIDEO_URL: "https://dnznrvs05pmza.cloudfront.net/kling-3-0-pro/933375220336558107/Animate_the_reference_image__Ella_walks_forward_naturally_in_the_center_with_Marshal_on_her_left_and.mp4?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiYmFhYzAyZmUzMjBiNWIwMyIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDczNDMzNH0.UtsO9PxNz5XUtkrQeoHfUVq0UwWGMvBeTJha_oL8ff8"
+        run: |
+          set -eu
+          mkdir -p assets
+          curl --fail --location --retry 3 "$VIDEO_URL" --output assets/eig-team-clean-walk.mp4
+          test -s assets/eig-team-clean-walk.mp4
+          file assets/eig-team-clean-walk.mp4
+
+      - name: Commit permanent video asset
+        run: |
+          set -eu
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/eig-team-clean-walk.mp4
+          git rm .github/workflows/import-eig-team-video.yml
+          git commit -m "Add approved EIG team hero video"
+          git push origin HEAD:codex/homepage-team-video
