@@ -5,7 +5,7 @@
   <title>Elevated Impact Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    :root { --navy:#0f172a; --dark:#020617; --panel:#1e293b; --red:#ef4444; --muted:#cbd5e1; --line:rgba(255,255,255,.10); }
+    :root { --navy:#1D245D; --navy-deep:#141A48; --navy-soft:#283171; --dark:#10153C; --panel:#252D68; --red:#D81C22; --muted:#D7DBEA; --line:rgba(255,255,255,.12); }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
     body { margin:0; font-family:Arial,sans-serif; background:var(--navy); color:white; }
@@ -20,16 +20,16 @@
     .subnav { margin:0 0 5px 12px; }
     .subnav a { font-size:13px; color:#94a3b8; padding:6px 10px; font-weight:600; }
     .content { min-width:0; }
-    .topbar { position:sticky; top:0; z-index:30; height:58px; display:flex; align-items:center; justify-content:flex-end; padding:0 26px; background:rgba(2,6,23,.94); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
+    .topbar { position:sticky; top:0; z-index:30; height:58px; display:flex; align-items:center; justify-content:flex-end; padding:0 26px; background:rgba(16,21,60,.96); border-bottom:1px solid var(--line); backdrop-filter:blur(12px); }
     .ecospace-btn { display:inline-block; background:var(--red); color:#fff; text-decoration:none; padding:10px 16px; border-radius:9px; font-weight:900; }
-    .hero { padding:76px 46px 70px; background:linear-gradient(135deg,#0f172a,#111d36 55%,#1d245d); border-bottom:1px solid var(--line); }
+    .hero { padding:76px 46px 70px; background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 55%,var(--navy-soft) 100%); border-bottom:1px solid var(--line); }
     .hero-inner { max-width:1080px; display:grid; grid-template-columns:1.05fr .95fr; gap:38px; align-items:center; }
     .hero h1 { font-size:54px; line-height:1.02; margin:0 0 18px; }
     .hero h1 span { color:var(--red); }
     .hero p { color:var(--muted); font-size:19px; line-height:1.6; max-width:700px; }
     .button { display:inline-block; padding:12px 20px; background:var(--red); border:none; color:white; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:800; margin-top:8px; }
-    .team-image { border-radius:18px; border:1px solid var(--line); overflow:hidden; background:#1D245D; box-shadow:0 22px 55px rgba(0,0,0,.30); }
-    .team-image img, .team-image video { display:block; width:100%; height:auto; background:#1D245D; }
+    .team-image { border-radius:18px; border:1px solid rgba(255,255,255,.14); overflow:hidden; background:var(--navy); box-shadow:0 22px 55px rgba(0,0,0,.24); }
+    .team-image img, .team-image video { display:block; width:100%; height:auto; background:var(--navy); }
     .section { padding:58px 46px; max-width:1200px; }
     .section h2 { margin-top:0; font-size:34px; }
     .section p.lead { color:#94a3b8; max-width:760px; line-height:1.6; }
@@ -39,7 +39,7 @@
     .card p { color:#b8c3d1; line-height:1.55; }
     .card a { color:#fca5a5; font-weight:800; text-decoration:none; }
     .simple-links { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:24px; }
-    .simple-links a { color:white; text-decoration:none; background:#162033; border:1px solid var(--line); padding:16px; border-radius:10px; font-weight:800; }
+    .simple-links a { color:white; text-decoration:none; background:var(--navy-soft); border:1px solid var(--line); padding:16px; border-radius:10px; font-weight:800; }
     footer { padding:36px 46px; background:var(--dark); color:#94a3b8; }
     footer a { color:white; }
     @media (max-width:900px) { .grid { grid-template-columns:1fr 1fr; } .simple-links { grid-template-columns:1fr 1fr; } .hero-inner { grid-template-columns:1fr; } }
