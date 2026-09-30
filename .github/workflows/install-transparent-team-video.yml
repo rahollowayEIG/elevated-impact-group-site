@@ -1,0 +1,45 @@
+name: Install transparent homepage team video
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/install-transparent-team-video.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download transparent team video
+        run: |
+          curl -L --fail --retry 3 'https://dnznrvs05pmza.cloudfront.net/sam3_video_segmentation/87fceb94-8d80-4ddb-a2c1-fecebd05e43c/e19ea6ac-d2bc-4b9b-8d44-ebf074979e0b.webm?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiZGVlYTZmNDIyNjliYzhhNCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc5MDg5NDY1OH0.qHugtZrkfWopj4D9h5n2LMsFkRLMCwnM3tuehJeyE28' -o assets/eig-team-transparent.webm
+
+      - name: Prefer transparent video on supported browsers
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("index.html")
+          s = p.read_text()
+          old = '            <source src="assets/eig-team-clean-walk.mp4" type="video/mp4" />'
+          new = '            <source src="assets/eig-team-transparent.webm" type="video/webm" />\n            <source src="assets/eig-team-clean-walk.mp4" type="video/mp4" />'
+          if new not in s:
+              if old not in s:
+                  raise SystemExit("video source anchor not found")
+              s = s.replace(old, new)
+          p.write_text(s)
+          PY
+
+      - name: Commit transparent video and remove one-time workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html assets/eig-team-transparent.webm
+          git rm .github/workflows/install-transparent-team-video.yml
+          git commit -m "Use transparent homepage team video"
+          git push
