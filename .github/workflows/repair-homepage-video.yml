@@ -1,0 +1,87 @@
+name: Repair homepage video background mask
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/repair-homepage-video.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install video tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install opencv-python-headless numpy
+
+      - name: Restore original source clip
+        run: |
+          git show ab001e71082b6e6b7e965666748e62c57272202f:assets/eig-team-clean-walk.mp4 > /tmp/eig-team-original.mp4
+
+      - name: Replace only edge-connected white background
+        run: |
+          cat > /tmp/repair_video.py <<'PY'
+          import cv2
+          import numpy as np
+
+          src = "/tmp/eig-team-original.mp4"
+          tmp = "/tmp/eig-team-repaired-silent.mp4"
+          cap = cv2.VideoCapture(src)
+          fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+          w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+          h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+          writer = cv2.VideoWriter(tmp, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
+          navy = np.array([0x5D, 0x24, 0x1D], dtype=np.float32)  # BGR for #1D245D
+
+          while True:
+              ok, frame = cap.read()
+              if not ok:
+                  break
+
+              f = frame.astype(np.int16)
+              lo = f.min(axis=2)
+              hi = f.max(axis=2)
+              candidate = ((lo >= 244) & ((hi - lo) <= 18)).astype(np.uint8)
+
+              count, labels = cv2.connectedComponents(candidate, connectivity=8)
+              border_labels = np.unique(np.concatenate([
+                  labels[0, :], labels[-1, :], labels[:, 0], labels[:, -1]
+              ]))
+              border_labels = border_labels[border_labels != 0]
+
+              if border_labels.size:
+                  bg = np.isin(labels, border_labels).astype(np.uint8) * 255
+                  bg = cv2.GaussianBlur(bg, (0, 0), 0.8)
+                  alpha = (bg.astype(np.float32) / 255.0)[..., None]
+                  out = frame.astype(np.float32) * (1.0 - alpha) + navy * alpha
+                  frame = np.clip(out, 0, 255).astype(np.uint8)
+
+              writer.write(frame)
+
+          cap.release()
+          writer.release()
+          PY
+
+          python /tmp/repair_video.py
+
+          ffmpeg -y             -i /tmp/eig-team-repaired-silent.mp4             -i /tmp/eig-team-original.mp4             -map 0:v:0 -map 1:a?             -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p             -c:a aac -b:a 192k -shortest             assets/eig-team-clean-walk.mp4
+
+      - name: Commit repaired video and remove one-time workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/eig-team-clean-walk.mp4
+          git rm .github/workflows/repair-homepage-video.yml
+          git commit -m "Repair homepage video background mask"
+          git push
