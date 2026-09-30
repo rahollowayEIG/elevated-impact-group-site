@@ -1,0 +1,41 @@
+name: One-time homepage video blue background
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/recolor-homepage-video.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  recolor:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Replace white studio background with EIG navy
+        run: |
+          set -e
+          INPUT="assets/eig-team-clean-walk.mp4"
+          OUTPUT="assets/eig-team-clean-walk-blue.mp4"
+          SIZE=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$INPUT")
+          RATE=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 "$INPUT")
+          ffmpeg -y             -i "$INPUT"             -f lavfi -i "color=c=0x1D245D:s=$SIZE:r=$RATE"             -filter_complex "[0:v]colorkey=0xFFFFFF:0.14:0.08[fg];[1:v][fg]overlay=shortest=1,format=yuv420p[v]"             -map "[v]" -map 0:a?             -c:v libx264 -crf 19 -preset medium -c:a aac -b:a 192k -shortest             "$OUTPUT"
+          mv "$OUTPUT" "$INPUT"
+
+      - name: Commit processed video and remove one-time workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/eig-team-clean-walk.mp4
+          git rm .github/workflows/recolor-homepage-video.yml
+          git commit -m "Render homepage team video on EIG navy"
+          git push
