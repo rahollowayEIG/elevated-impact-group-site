@@ -30,6 +30,8 @@
     .button { display:inline-block; padding:12px 20px; background:var(--red); border:none; color:white; border-radius:8px; cursor:pointer; text-decoration:none; font-weight:800; margin-top:8px; }
     .team-image { border-radius:18px; border:1px solid rgba(255,255,255,.14); overflow:hidden; background:var(--navy); box-shadow:0 22px 55px rgba(0,0,0,.24); }
     .team-image img, .team-image video { display:block; width:100%; height:auto; background:var(--navy); }
+    .team-name-row { display:grid; grid-template-columns:1fr 1fr 1fr; align-items:center; text-align:center; padding:10px 18px 12px; background:var(--navy); border-top:1px solid rgba(255,255,255,.10); }
+    .team-name-row span { font-size:14px; font-weight:900; letter-spacing:.04em; color:white; }
     .section { padding:58px 46px; max-width:1200px; }
     .section h2 { margin-top:0; font-size:34px; }
     .section p.lead { color:#94a3b8; max-width:760px; line-height:1.6; }
@@ -105,6 +107,11 @@
             <source src="assets/eig-team-clean-walk.mp4" type="video/mp4" />
             Your browser does not support the EIG team video.
           </video>
+          <div class="team-name-row" aria-label="The EIG Team">
+            <span>Marshal</span>
+            <span>Ella</span>
+            <span>Maverick</span>
+          </div>
         </div>
       </div>
     </section>
